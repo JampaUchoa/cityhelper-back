@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "cityhelper-back"
+version = "0.1.0"
+description = ""
+authors = ["Jampa Uchoa <joaopedrouchoa@hotmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+django = "^3.1"
+djangorestframework = "^3.11.1"
+django-cors-headers = "^3.5.0"
+django-extra-fields = "^3.0.0"
+psycopg2 = "^2.8.6"
+psycopg2-binary = "^2.8.6"
+requests = "^2.24.0"
+sentry-sdk = "^0.18.0"
+
+[tool.poetry.dev-dependencies]
+autopep8 = "^1.5.4"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
