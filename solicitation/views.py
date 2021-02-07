@@ -6,6 +6,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.conf import settings
 from rest_framework.parsers import FileUploadParser
 from rest_framework.views import APIView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+
 import csv
 import datetime
 
@@ -14,9 +17,13 @@ from .models import *
 
 # Solicitation
 class SolicitationViewSet(viewsets.ModelViewSet):
+    page_size = 100
     serializer_class = SolicitationSerializer
     model = Solicitation
     queryset = Solicitation.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['processo_numero', 'solicitacao_vitimas', 'solicitacao_vitimas_fatais']
+    search_fields = ['processo_localizacao', 'processo_numero', 'processo_origem', 'processo_situacao', 'processo_status', 'processo_tipo', 'rpa_codigo', 'rpa_nome', 'solicitacao_bairro', 'solicitacao_descricao', 'solicitacao_endereco', 'solicitacao_localidade', 'solicitacao_microrregiao', 'solicitacao_origem_chamado', 'solicitacao_regional', 'solicitacao_roteiro']
 
 
 class LoadCSV(APIView):
