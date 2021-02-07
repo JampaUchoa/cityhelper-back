@@ -17,12 +17,11 @@ from .models import *
 
 # Solicitation
 class SolicitationViewSet(viewsets.ModelViewSet):
-    page_size = 100
     serializer_class = SolicitationSerializer
     model = Solicitation
     queryset = Solicitation.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['processo_numero', 'solicitacao_vitimas', 'solicitacao_vitimas_fatais']
+    filterset_fields = ['processo_numero', 'solicitacao_vitimas', 'solicitacao_vitimas_fatais', 'solicitacao_descricao', 'solicitacao_data']
     search_fields = ['processo_localizacao', 'processo_numero', 'processo_origem', 'processo_situacao', 'processo_status', 'processo_tipo', 'rpa_codigo', 'rpa_nome', 'solicitacao_bairro', 'solicitacao_descricao', 'solicitacao_endereco', 'solicitacao_localidade', 'solicitacao_microrregiao', 'solicitacao_origem_chamado', 'solicitacao_regional', 'solicitacao_roteiro']
 
 
