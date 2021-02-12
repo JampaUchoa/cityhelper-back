@@ -5,12 +5,28 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.renderers import JSONRenderer
 import requests
 from .models import Solicitation
+from django.db.models import Max
+from datetime import datetime
 
 class SolicitationSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Solicitation
         fields = '__all__'
+
+    def create(self, validated_data):
+        
+        solicitation = Solicitation(**validated_data)
+        solicitation.processo_status = "aberto"
+        solicitation.solicitacao_data = datetime.now()
+        solicitation.save()
+        return solicitation
+
+    def to_internal_value(self, data):
+        data["processo_numero"] = Solicitation.objects.aggregate(Max('processo_numero'))["processo_numero__max"] + 1
+
+        return super(SolicitationSerializer, self).to_internal_value(data)
+
 
 # class UserSerializer(serializers.ModelSerializer):
 #     token = serializers.UUIDField(required=False)
