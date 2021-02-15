@@ -18,16 +18,16 @@ class SolicitationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         
         solicitation = Solicitation(**validated_data)
-        solicitation.processo_status = "aberto"
+        solicitation.processo_situacao = "aberto"
         solicitation.solicitacao_data = datetime.now()
         solicitation.save()
         return solicitation
 
     def to_internal_value(self, data):
         try:
-            if not data["processo_numero"]:
+            if not data.get("processo_numero"):
                 data["processo_numero"] = Solicitation.objects.aggregate(Max('processo_numero'))["processo_numero__max"] + 1
-        except MultiValueDictKeyError:
+        except:
             print(1)
         return super(SolicitationSerializer, self).to_internal_value(data)
 

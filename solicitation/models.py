@@ -29,3 +29,4 @@ class Solicitation(models.Model):
     processo_localizacao = models.TextField(null=True)
     processo_status = models.TextField(null=True)
     processo_data_conclusao = models.DateTimeField(null=True)
+    enviado_por = models.UUIDField(null=True)
