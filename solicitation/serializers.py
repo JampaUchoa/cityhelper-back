@@ -7,6 +7,7 @@ import requests
 from .models import Solicitation
 from django.db.models import Max
 from datetime import datetime
+from django.utils.datastructures import MultiValueDictKeyError
 
 class SolicitationSerializer(serializers.ModelSerializer):
    
@@ -23,8 +24,11 @@ class SolicitationSerializer(serializers.ModelSerializer):
         return solicitation
 
     def to_internal_value(self, data):
-        data["processo_numero"] = Solicitation.objects.aggregate(Max('processo_numero'))["processo_numero__max"] + 1
-
+        try:
+            if not data["processo_numero"]:
+                data["processo_numero"] = Solicitation.objects.aggregate(Max('processo_numero'))["processo_numero__max"] + 1
+        except MultiValueDictKeyError:
+            print(1)
         return super(SolicitationSerializer, self).to_internal_value(data)
 
 
